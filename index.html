@@ -1,36 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Slideshow Example</title>
+    <title>Countdown Timer</title>
   </head>
   <body>
-    <img id="slideshow" style="width: 700px; height: 500px; border-radius: 10px; margin: auto;" src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80" alt="Slideshow Image">
+    <h1 id="countdown"></h1>
 
     <script>
-      const images = [
-        'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80',
-        'https://images.unsplash.com/photo-1501446529957-6226bd447c46?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1489&q=80',
-        'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
-      ];
+      const countdownElement = document.getElementById('countdown');
 
-      // Get a reference to the slideshow element through an id
-      const slideshow = document.getElementById('slideshow');
+      let secondsRemaining = 60;
 
-      // Set the initial image to the first image in the array
-      let currentImageIndex = 0;
-      slideshow.src = images[currentImageIndex];
-
-      // Define a function to change the image
-      function changeImage() {
-        currentImageIndex++;
-        if (currentImageIndex >= images.length) {
-          currentImageIndex = 0;
+      function updateCountdown() {
+        countdownElement.textContent = `Time remaining: ${secondsRemaining} seconds`;
+        secondsRemaining--;
+        if (secondsRemaining < 0) {
+          clearInterval(intervalId);
+          countdownElement.textContent = 'Time is up!';
         }
-        slideshow.src = images[currentImageIndex];
       }
 
-      // Change the image every 2 seconds
-      setInterval(changeImage, 2000);
+      updateCountdown();
+      const intervalId = setInterval(updateCountdown, 1000);
+
+      setTimeout(() => {
+        clearInterval(intervalId);
+        countdownElement.textContent = 'Time is up!';
+      }, secondsRemaining * 1000);
     </script>
   </body>
 </html>
